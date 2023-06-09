@@ -20,6 +20,7 @@ ${locator_month}            id=birthday_month
 ${locator_year}             id=birthday_year
 ${locator_phone}            name=telephone
 ${locator_save_register}    css=#register_form > section:nth-child(2) > input
+${locator_message_css}      css=#regis_success > div > h1
 
 
 *** Keywords ***
@@ -52,13 +53,20 @@ Input Data on Register Page and save
     Input Text                         ${locator_phone}                089-999-9999
     Click element                      ${locator_save_register}
 
-*** Test Cases ***
+Verify error message correctly
+        Wait Until Element Is Visible      ${locator_message_css}    10s
+        ${txt}=     Get text               ${locator_message_css}
+        Should Be Equal                    ${txt}         ขั้นตอนสุดท้ายสำหรับการสมัครสมาชิก
+        Close Browser
 
+
+*** Test Cases ***
 
 Register lnwshop
     Open Website lnwshop
     Go to button register
     Input Data on Register Page and save
+    Verify error message correctly
 
 
 
